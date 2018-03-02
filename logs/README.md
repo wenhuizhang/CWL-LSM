@@ -1,6 +1,7 @@
-# Information 
+# Information of Lab
 
 ## 1. How to access VM
+Please check file **machine-info.txt**.
 
 Once logged on the bus, info for VM is listed as below:
 
@@ -17,6 +18,7 @@ $ ssh cse544@192.168.122.133
 ```
 
 ## 2. How to assign Attributes
+Please check file **file-label.txt**.
 p2 tests are located under `/home/cse544/p2` folder, the attrs are set as below:
 
 * file: foo.txt
@@ -46,6 +48,7 @@ $ getfattr -d -m security user_test
 $ getfattr -d -m security cwl_test
 ```
 ## 3. dmesg logs
+Please check file **log-dmesg.txt**.
 After executing `/home/cse544/p2-user/cwl_test` and `/home/cse544/p2-user/user_test /home/cse544/p2-user/foo.txt /home/cse544/p2-user/bar.txt ` 
 Please remind the execution order.
 ```
@@ -100,6 +103,7 @@ Mar  1 22:17:32 ubuntu kernel: [ 9055.988110] sample: New security setting (0): 
 Mar  1 22:17:32 ubuntu kernel: [ 9055.988717] inode_has_perm: task pid=30449 of ssid 0x2 NOT authorized (-4) for inode osid 0x1 (file:/home/cse544/p2-user/bar.txt) for ops 0x4
 ```
 ## 4. files logs
+Please check file **log-output.txt**.
 ```
 cse544@ubuntu:/usr/src/linux-2.6.23/security$ /home/cse544/p2-user/cwl_test 
 Path: /sys/kernel/debug/cwl/cwlite
