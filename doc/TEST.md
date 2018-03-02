@@ -33,6 +33,8 @@ security.sample="trusted"
 * file: cwl_test
 security.sample="trusted"
 
+To test, please first touch two files, `foo.txt` and `bar.txt`.
+
 
 ```
 $ sudo setfattr -n security.sample -v "untrusted" foo.txt
