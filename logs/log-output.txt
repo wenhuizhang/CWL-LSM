@@ -1,0 +1,37 @@
+cse544@ubuntu:/usr/src/linux-2.6.23/security$ /home/cse544/p2-user/cwl_test 
+Path: /sys/kernel/debug/cwl/cwlite
+open: fd 3
+in cwlite_off
+Setting CW-Lite OFF
+open: after off 0
+CWL: fd 3
+CWL: before 0
+in cwlite_on
+Setting CW-Lite ON
+CWL: after on 1 cwl is 1
+in cwlite_off
+Setting CW-Lite OFF
+CWL: reset off 0 cwl is 0
+close: fd: 3; ret 0
+cse544@ubuntu:/usr/src/linux-2.6.23/security$ 
+cse544@ubuntu:/usr/src/linux-2.6.23/security$ /home/cse544/p2-user/user_test /home/cse544/p2-user/foo.txt /home/cse544/p2-user/bar.txt 
+Path: /sys/kernel/debug/cwl/cwlite
+open: fd 3
+in cwlite_off
+Setting CW-Lite OFF
+open: after off 0
+user: /home/cse544/p2-user/foo.txt attribute trusted
+?
+ @
+in cwlite_on
+Setting CW-Lite ON
+in cwlite_off
+Setting CW-Lite OFF
+user: /home/cse544/p2-user/bar.txt attribute untrusted
+in cwlite_on
+Setting CW-Lite ON
+in cwlite_off
+Setting CW-Lite OFF
+
+
+close: fd: 3; ret 0

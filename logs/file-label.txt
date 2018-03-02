@@ -1,0 +1,21 @@
+sudo setfattr -n security.sample -v "untrusted" foo.txt
+sudo setfattr -n security.sample -v "trusted" bar.txt
+sudo setfattr -n security.sample -v "trusted" user_test
+sudo setfattr -n security.sample -v "trusted" cwl_test
+
+
+cse544@ubuntu:~/p2-user$ getfattr -d -m security foo.txt
+# file: foo.txt
+security.sample="trusted"
+
+cse544@ubuntu:~/p2-user$ getfattr -d -m security bar.txt
+# file: bar.txt
+security.sample="untrusted"
+
+cse544@ubuntu:~/p2-user$ getfattr -d -m security user_test
+# file: user_test
+security.sample="trusted"
+
+cse544@ubuntu:~/p2-user$ getfattr -d -m security cwl_test
+# file: cwl_test
+security.sample="trusted"

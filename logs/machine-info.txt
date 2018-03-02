@@ -1,0 +1,10 @@
+VM: cse544_15
+User: cse544
+Password: cse544!proj3ct
+
+virsh dumpxml cse544_15 | grep address
+arp -n | grep 52:54:00:63:bf:87
+ssh cse544@192.168.122.133
+
+cse544@ubuntu:~/p2-user$ uname -a
+Linux ubuntu 2.6.23 #1 SMP Thu Mar 1 19:34:47 EST 2018 x86_64 GNU/Linux
