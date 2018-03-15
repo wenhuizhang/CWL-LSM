@@ -154,17 +154,24 @@ static int has_perm(u32 ssid_full, u32 osid, u32 ops)
 	// SAMPLE_IGNORE 0; SAMPLE_UNTRUSTED 1; SAMPLE_TRUSTED 2; SAMPLE_TARGET_SID 7
 	//MAY_EXEC = 1; MAY_READ = 4; MAY_APPEND = 8; MAY_WRITE = 2; MAY_WRITE_EXEC = 3
 	if( ssid && osid ){
+		if( ssid == SAMPLE_IGNORE ) 		            						return 0;
 		// if on then enforce cwlite, lower ssid to process inode
-		if( cwl == 0x10000000 )									return 0;
-		if( ssid == SAMPLE_IGNORE ) 								return 0;
 		// cwl == 0x00000000 means off, cwl == 0x10000000 means on
 		// if off then enforce biba, no write/append up, no read down
-		if( (!(ssid^SAMPLE_TRUSTED)) && (!(osid^SAMPLE_UNTRUSTED)) && (!(ops^MAY_EXEC)) )	return NOT_EXEC;
-		if( (!(ssid^SAMPLE_TRUSTED)) && (!(osid^SAMPLE_UNTRUSTED)) && (!(ops^MAY_READ)) )	return NOT_READ;
-		if( (!(ssid^SAMPLE_TRUSTED)) && (!(osid^SAMPLE_UNTRUSTED)) && (!(ops^MAY_WRITE_EXEC)) )	return NOT_WRITE_EXEC;
-		if( (!(ssid^SAMPLE_UNTRUSTED)) && (!(osid^SAMPLE_TRUSTED)) && (!(ops^MAY_WRITE)) )	return NOT_WRITE;
-		if( (!(ssid^SAMPLE_UNTRUSTED)) && (!(osid^SAMPLE_TRUSTED)) && (!(ops^MAY_APPEND)) )	return NOT_APPEND;
-		if( (!(ssid^SAMPLE_UNTRUSTED)) && (!(osid^SAMPLE_TRUSTED)) && (!(ops^MAY_WRITE_EXEC)) )	return NOT_WRITE_EXEC;
+		if( !!cwl ){
+		    if( (!(ssid^SAMPLE_UNTRUSTED)) && (!(osid^SAMPLE_TRUSTED)) && (!(ops^MAY_WRITE)) )	        return NOT_WRITE;
+		    if( (!(ssid^SAMPLE_UNTRUSTED)) && (!(osid^SAMPLE_TRUSTED)) && (!(ops^MAY_APPEND)) )	        return NOT_APPEND;
+		    if( (!(ssid^SAMPLE_UNTRUSTED)) && (!(osid^SAMPLE_TRUSTED)) && (!(ops^MAY_WRITE_EXEC)) )	return NOT_WRITE_EXEC;
+		    return 0;
+                }else{
+		    if( (!(ssid^SAMPLE_TRUSTED)) && (!(osid^SAMPLE_UNTRUSTED)) && (!(ops^MAY_EXEC)) )	        return NOT_EXEC;
+		    if( (!(ssid^SAMPLE_TRUSTED)) && (!(osid^SAMPLE_UNTRUSTED)) && (!(ops^MAY_READ)) )	        return NOT_READ;
+		    if( (!(ssid^SAMPLE_TRUSTED)) && (!(osid^SAMPLE_UNTRUSTED)) && (!(ops^MAY_WRITE_EXEC)) )	return NOT_WRITE_EXEC;
+		    if( (!(ssid^SAMPLE_UNTRUSTED)) && (!(osid^SAMPLE_TRUSTED)) && (!(ops^MAY_WRITE)) )	        return NOT_WRITE;
+		    if( (!(ssid^SAMPLE_UNTRUSTED)) && (!(osid^SAMPLE_TRUSTED)) && (!(ops^MAY_APPEND)) )	        return NOT_APPEND;
+		    if( (!(ssid^SAMPLE_UNTRUSTED)) && (!(osid^SAMPLE_TRUSTED)) && (!(ops^MAY_WRITE_EXEC)) )	return NOT_WRITE_EXEC;
+		    return 0;
+                }
 		return 0;
 	}
         /* Other processes - allow */
