@@ -89,6 +89,8 @@ MODULE_LICENSE("GPL");
 #define NOT_WRITE -2
 #define NOT_WRITE_EXEC -3
 
+/* cwl data to bool value */
+#define BOOL_CWL    !!cwl
 
 extern struct security_operations *security_ops;
 /*
@@ -158,7 +160,7 @@ static int has_perm(u32 ssid_full, u32 osid, u32 ops)
 		// if on then enforce cwlite, lower ssid to process inode
 		// cwl == 0x00000000 means off, cwl == 0x10000000 means on
 		// if off then enforce biba, no write/append up, no read down
-		if( !!cwl ){
+		if( BOOL_CWL ){
 		    if( (!(ssid^SAMPLE_UNTRUSTED)) && (!(osid^SAMPLE_TRUSTED)) && (!(ops^MAY_WRITE)) )	        return NOT_WRITE;
 		    if( (!(ssid^SAMPLE_UNTRUSTED)) && (!(osid^SAMPLE_TRUSTED)) && (!(ops^MAY_APPEND)) )	        return NOT_APPEND;
 		    if( (!(ssid^SAMPLE_UNTRUSTED)) && (!(osid^SAMPLE_TRUSTED)) && (!(ops^MAY_WRITE_EXEC)) )	return NOT_WRITE_EXEC;
